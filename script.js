@@ -1,10 +1,4 @@
-//add book to an array
-//display that book on the page
-// make sure this now works for multiple books
-
-
 const myLibrary = [];
-
 
 function Book(title, author, pages, read){
     this.title = title;
@@ -14,19 +8,41 @@ function Book(title, author, pages, read){
 };
 
 Book.prototype.addBookToLibrary = function(){
-    myLibrary.push(`${this.title} written by ${this.author} has ${this.pages} pages, ${this.read}`);
+    myLibrary.push(`${this.title}, ${this.author}, ${this.pages},${this.read}`);
 }
 
+const testBook = new Book("Hobbit", "J.R.R Tolkien", 467, "read");
+testBook.addBookToLibrary();
 
-const book1 = new Book("Hobbit", "J.R.R Tolkien", 467, "read");
-const book2 = new Book("LoTR", "J.R.R Tolkien", 398, "not read");
+function updateDisplay(){
+    const content = document.querySelector("#content");
+    const para = document.createElement("p");
+    para.textContent = myLibrary;
+    content.appendChild(para);
+};
+
+let bookNameForm = document.querySelector("#book_name");
+let authorForm = document.querySelector("#author");
+let pagesNumForm = document.querySelector("#pages");
+let readForm = document.querySelector("#read");
 
 
-book1.addBookToLibrary();
-book2.addBookToLibrary();
+let btn = document.querySelector("#sButton");
+btn.addEventListener("click", ()=>{
+    event.preventDefault();
+
+    const title = bookNameForm.value;
+    const author = authorForm.value;
+    const pages = pagesNumForm.value;
+    const read = readForm.checked;
 
 
-const content = document.querySelector("#content");
-const para = document.createElement("p");
-para.textContent = myLibrary;
-content.appendChild(para);
+    let book = new Book(title, author, pages, read);
+    book.addBookToLibrary();
+    updateDisplay();
+    console.log(myLibrary);
+
+});
+
+console.log(myLibrary);
+
