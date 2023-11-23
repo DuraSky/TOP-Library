@@ -1,5 +1,4 @@
 const myLibrary = [];
-let counter = 0;
 let paraCounter = 0;
 let dataCounter = 0;
 
@@ -22,13 +21,6 @@ Book.prototype.addBookToLibrary = function(){
     paraCounter++;
 };
 
-//  Book.prototype.changeRead = function(){
-//      //find para with correct id and change html
-    
-
-// };
-
-
 Book.prototype.updateDisplay = function(){
     const content = document.querySelector("#content");
     const para = document.createElement("p");
@@ -40,32 +32,23 @@ Book.prototype.updateDisplay = function(){
     content.appendChild(para);
     para.appendChild(readBtn);
     para.appendChild(delBtn);
-    let thisButtonId = readBtn.getAttribute("data-id");
-    let thisParaId = para.getAttribute("data-id");
-
     const getParaID = delBtn.parentElement.dataset.id;
     
     readBtn.innerHTML = "Read/Unread";
     readBtn.addEventListener("click", ()=>{
-
-        // for (let i =0; i < myLibrary.length; i++){
-        //     if(myLibrary[i].data == getParaID){
-        //         if(this.read == false){
-        //             read.value = true;
-        //         }else if(this.read == true){
-        //             read.value = false;
-        //         }
-
-        //     }
-        //     console.log(myLibrary);
-            
+        for (let i =0; i < myLibrary.length; i++){
+            if(myLibrary[i].data == getParaID){
+                myLibrary[i].read = !myLibrary[i].read;
+                para.textContent = `Book title: ${this.title}, Author: ${this.author}, Pages: ${this.pages}, Read: ` + myLibrary[i].read;
+                para.appendChild(readBtn);
+                para.appendChild(delBtn);
+            };          
         };
-      
+    console.log(myLibrary);
 });
 
     delBtn.innerHTML = "Delete";
     delBtn.addEventListener("click", ()=>{
-
         for (let i =0; i < myLibrary.length; i++){
             if(myLibrary[i].data == getParaID){
                 myLibrary.splice(i,1)
@@ -86,29 +69,19 @@ let btn = document.querySelector("#sButton");
 btn.addEventListener("click", ()=>{
     event.preventDefault();
 
-     if(myLibrary.length != 0){
-         counter++
-     };
-
     const title = bookNameForm.value;
     const author = authorForm.value;
     const pages = pagesNumForm.value;
     const read = readForm.checked;
 
-    
-
-
     let book = new Book(title, author, pages, read);
     book.addBookToLibrary();
     book.updateDisplay();
-    // console.log(myLibrary);
-    console.log("this is basic counter: " + counter);
 
     bookNameForm.value = "";
     authorForm.value = "";
     pagesNumForm.value = "";
     readForm.checked = false;
-
 });
 
 
