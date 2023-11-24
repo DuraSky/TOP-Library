@@ -21,27 +21,30 @@ Book.prototype.addBookToLibrary = function(){
     paraCounter++;
 };
 
+
 Book.prototype.updateDisplay = function(){
     const content = document.querySelector("#content");
-    const para = document.createElement("p");
-    para.setAttribute("data-id", paraCounter -1);
+    const div = document.createElement("div");
+    div.setAttribute("data-id", paraCounter -1);
     const delBtn = document.createElement("button");
+    delBtn.setAttribute("class", "delBtn");
     const readBtn = document.createElement("button");
+    readBtn.setAttribute("class", "readBtn");
     readBtn.setAttribute("data-id",paraCounter -1);
-    para.textContent = `Book title: ${this.title}, Author: ${this.author}, Pages: ${this.pages}, Read: ${this.read}`;
-    content.appendChild(para);
-    para.appendChild(readBtn);
-    para.appendChild(delBtn);
-    const getParaID = delBtn.parentElement.dataset.id;
-    
+    div.innerHTML = `<h5>Book title:</h5> <p>${this.title}</p> <h5>Author:</h5> <p>${this.author}</p> <h5>Pages:</h5> <p>${this.pages}</p> <h5>Read:</h5> <p>${this.read}</p>`;
+    content.appendChild(div);
+    div.appendChild(readBtn);
+    div.appendChild(delBtn);
+    const getDivID = delBtn.parentElement.dataset.id;
+     
     readBtn.innerHTML = "Read/Unread";
     readBtn.addEventListener("click", ()=>{
         for (let i =0; i < myLibrary.length; i++){
-            if(myLibrary[i].data == getParaID){
+            if(myLibrary[i].data == getDivID){
                 myLibrary[i].read = !myLibrary[i].read;
-                para.textContent = `Book title: ${this.title}, Author: ${this.author}, Pages: ${this.pages}, Read: ` + myLibrary[i].read;
-                para.appendChild(readBtn);
-                para.appendChild(delBtn);
+                div.innerHTML = `<h5>Book title:</h5> <p>${this.title}</p> <h5>Author:</h5> <p>${this.author}</p> <h5>Pages:</h5> <p>${this.pages}</p> <h5>Read:</h5>` + "<p>" + myLibrary[i].read + "</p>";
+                div.appendChild(readBtn);
+                div.appendChild(delBtn);
             };          
         };
     console.log(myLibrary);
@@ -50,9 +53,9 @@ Book.prototype.updateDisplay = function(){
     delBtn.innerHTML = "Delete";
     delBtn.addEventListener("click", ()=>{
         for (let i =0; i < myLibrary.length; i++){
-            if(myLibrary[i].data == getParaID){
+            if(myLibrary[i].data == getDivID){
                 myLibrary.splice(i,1)
-                para.remove();
+                div.remove();
             }         
         };
     console.log(myLibrary)
