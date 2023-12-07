@@ -2,27 +2,27 @@ const myLibrary = [];
 let paraCounter = 0;
 let dataCounter = 0;
 
-function Book(title, author, pages, read, data){
+class Book{
+    constructor(title, author, pages, read, data){
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
     this.data = data;
-};
+    }
 
-Book.prototype.addBookToLibrary = function(){
-    myLibrary.push({
-        title: this.title,
-        author: this.author,
-        pages: this.pages,
-        read: this.read,
-        data: dataCounter++
-    });
-    paraCounter++;
-};
+    pushToLibrary(book){
+        myLibrary.push({
+                 title: this.title,
+                 author: this.author,
+                 pages: this.pages,
+                 read: this.read,
+                 data: dataCounter++
+             });
+             paraCounter++;
+    }
 
-
-Book.prototype.updateDisplay = function(){
+    addToDisplay(book){
     const content = document.querySelector("#content");
     const div = document.createElement("div");
     div.setAttribute("data-id", paraCounter -1);
@@ -36,7 +36,7 @@ Book.prototype.updateDisplay = function(){
     div.appendChild(readBtn);
     div.appendChild(delBtn);
     const getDivID = delBtn.parentElement.dataset.id;
-     
+
     readBtn.innerHTML = "Read/Unread";
     readBtn.addEventListener("click", ()=>{
         for (let i =0; i < myLibrary.length; i++){
@@ -48,7 +48,7 @@ Book.prototype.updateDisplay = function(){
             };          
         };
     console.log(myLibrary);
-});
+
 
     delBtn.innerHTML = "Delete";
     delBtn.addEventListener("click", ()=>{
@@ -60,7 +60,25 @@ Book.prototype.updateDisplay = function(){
         };
     console.log(myLibrary)
     });
+});
+}
 };
+
+// class addBookToLibrary extends Book{
+//     // myLibrary.push({
+//     //     title: this.title,
+//     //     author: this.author,
+//     //     pages: this.pages,
+//     //     read: this.read,
+//     //     data: dataCounter++
+//     // });
+//     // paraCounter++;
+
+   
+    
+// };
+
+
 
 let bookNameForm = document.querySelector("#book_name");
 let authorForm = document.querySelector("#author");
@@ -78,8 +96,8 @@ btn.addEventListener("click", ()=>{
     const read = readForm.checked;
 
     let book = new Book(title, author, pages, read);
-    book.addBookToLibrary();
-    book.updateDisplay();
+    book.pushToLibrary(book);
+    book.addToDisplay(book);
 
     bookNameForm.value = "";
     authorForm.value = "";
